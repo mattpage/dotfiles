@@ -7,13 +7,7 @@ set -x
 # switch shells
 chsh -s $(which zsh)
 
-# remove any existing config
-rm -f $HOME/.zshrc
-
-# create a bunch of links
-ln -s $(pwd)/vimrc $HOME/.vimrc
-ln -s $(pwd)/vim $HOME/.vim
-ln -s $(pwd)/zshrc $HOME/.zshrc
+mkdir -p $(pwd)/vim/backup $(pwd)/vim/bundle $(pwd)/vim/colors
 
 # install a bunch of vim plugins
 git clone https://github.com/altercation/vim-colors-solarized.git $(pwd)/vim/bundle/vim-colors-solarized
@@ -40,7 +34,7 @@ git clone https://github.com/Yggdroot/indentLine.git $(pwd)/vim/bundle/indentLin
 # git clone https://github.com/fatih/vim-go.git $(pwd)/vim/bundle/vim-go
 
 # install the solarized colors
-mv $(pwd)/vim/bundle/vim-colors-solarized/colors/solarized.vim $(pwd)/vim/colors
+cp $(pwd)/vim/bundle/vim-colors-solarized/colors/solarized.vim $(pwd)/vim/colors
 
 apt-get install -y \
   fuse fzf ripgrep npm universal-ctags yamllint
@@ -52,5 +46,7 @@ node_version=`node --version`
 ln -s "/workspaces/github/vendor/node/node-$node_version-linux-x64/lib/node_modules/n/bin/n" /usr/local/bin/n
 n stable
 
-# map capslock to ctrl
-setxkbmap -layout us -option ctrl:nocaps
+# create a bunch of links
+ln -s $(pwd)/vimrc $HOME/.vimrc
+ln -s $(pwd)/vim $HOME/.vim
+ln -s $(pwd)/zshrc $HOME/.zshrc
