@@ -209,7 +209,7 @@ map <Leader>ff :Files<CR>
 map <Leader>fc :Commits<CR>
 
 "--- vim-commentary ---
-map <leader>c gc
+map <leader>c gc<CR>
 
 "--- vim-javascript ---
 " do not syntax highlight jsdocs
@@ -306,9 +306,9 @@ command! PrettyJson PrettyPrintJSON
 command! FormatJSON PrettyPrintJSON
 command! FormatJson PrettyPrintJSON
 
-" --- yank text in visual mode using the ANSI OSC52 sequence ---
+" " --- yank text in visual mode using the ANSI OSC52 sequence ---
 vnoremap <leader>y :OSCYank<CR>
+vnoremap yy :OSCYank<CR>
 
 " --- copy file path of current buffer to clipboard ---
-nnoremap <leader>cp :!echo -n % \| pbcopy<cr>
-
+nnoremap <leader>cp :let @" = expand("%")<cr>:OSCYankReg "<CR>
