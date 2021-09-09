@@ -7,9 +7,6 @@ set -x
 # switch shells
 chsh -s $(which zsh)
 
-# remove existing init scripts
-rm -f $HOME/.zshrc
-
 mkdir -p $(pwd)/vim/backup $(pwd)/vim/bundle $(pwd)/vim/colors
 
 # install a bunch of vim plugins
@@ -56,6 +53,6 @@ git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
 $HOME/.fzf/install --all
 
 # create a bunch of links
-ln -s $(pwd)/vimrc $HOME/.vimrc
-ln -s $(pwd)/vim $HOME/.vim
-ln -s $(pwd)/zshrc $HOME/.zshrc
+ln -sf $(pwd)/vimrc $HOME/.vimrc
+ln -sf $(pwd)/vim $HOME/.vim
+ln -sf $(pwd)/zshrc $HOME/.zshrc
