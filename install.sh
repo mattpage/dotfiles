@@ -49,6 +49,9 @@ node_version=`node --version`
 ln -s "/workspaces/github/vendor/node/node-$node_version-linux-x64/lib/node_modules/n/bin/n" /usr/local/bin/n
 n stable
 
+# install fzf
+git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+
 # create a bunch of links
 ln -s $(pwd)/vimrc $HOME/.vimrc
 ln -s $(pwd)/vim $HOME/.vim
