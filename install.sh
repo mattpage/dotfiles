@@ -7,6 +7,9 @@ set -x
 # switch shells
 chsh -s $(which zsh)
 
+# remove existing init scripts
+rm -f $HOME/.zshrc
+
 mkdir -p $(pwd)/vim/backup $(pwd)/vim/bundle $(pwd)/vim/colors
 
 # install a bunch of vim plugins
