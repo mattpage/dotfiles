@@ -34,6 +34,7 @@ git clone https://github.com/bkad/CamelCaseMotion.git $(pwd)/vim/bundle/CamelCas
 git clone https://github.com/vim-test/vim-test.git  $(pwd)/vim/bundle/vim-test
 git clone https://github.com/tpope/vim-obsession.git  $(pwd)/vim/bundle/vim-obsession
 git clone https://github.com/Yggdroot/indentLine.git $(pwd)/vim/bundle/indentLine
+git clone https://github.com/ojroques/vim-oscyank.git $(pwd)/vim/bundle/vim-oscyank
 # git clone https://github.com/fatih/vim-go.git $(pwd)/vim/bundle/vim-go
 
 # install the solarized colors
@@ -50,7 +51,9 @@ ln -s "/workspaces/github/vendor/node/node-$node_version-linux-x64/lib/node_modu
 n stable
 
 # install fzf
+rm -rf $HOME/.fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
+$HOME/.fzf/install --all
 
 # create a bunch of links
 ln -s $(pwd)/vimrc $HOME/.vimrc

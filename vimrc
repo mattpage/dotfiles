@@ -306,6 +306,9 @@ command! PrettyJson PrettyPrintJSON
 command! FormatJSON PrettyPrintJSON
 command! FormatJson PrettyPrintJSON
 
+" --- yank text in visual mode using the ANSI OSC52 sequence ---
+vnoremap <leader>y :OSCYank<CR>
+
 " --- copy file path of current buffer to clipboard ---
 nnoremap <leader>cp :!echo -n % \| pbcopy<cr>
 
