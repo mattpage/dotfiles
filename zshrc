@@ -1,3 +1,6 @@
+export EDITOR=vim
+export VISUAL=vim
+
 export PATH="/usr/local/bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
