@@ -7,7 +7,7 @@ set -x
 # switch shells
 chsh -s $(which zsh)
 
-mkdir -p $(pwd)/vim/backup $(pwd)/vim/bundle $(pwd)/vim/colors
+mkdir -p $(pwd)/vim/backup $(pwd)/vim/bundle $(pwd)/vim/colors $(pwd)/vim-sessions
 
 # install a bunch of vim plugins
 git clone https://github.com/altercation/vim-colors-solarized.git $(pwd)/vim/bundle/vim-colors-solarized
@@ -51,6 +51,10 @@ n stable
 rm -rf $HOME/.fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.fzf
 $HOME/.fzf/install --all
+
+# git completion
+curl -fLo $HOME/.zsh/git-completion.zsh --create-dirs https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.zsh
+curl -fLo $HOME/.zsh/git-completion.bash https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash
 
 # create a bunch of links
 ln -sf $(pwd)/vimrc $HOME/.vimrc
