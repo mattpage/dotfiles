@@ -37,15 +37,15 @@ git clone https://github.com/ojroques/vim-oscyank.git $(pwd)/vim/bundle/vim-oscy
 # install the solarized colors
 cp $(pwd)/vim/bundle/vim-colors-solarized/colors/solarized.vim $(pwd)/vim/colors
 
-apt-get install -y \
+sudo apt-get install -y \
   fuse fzf ripgrep npm universal-ctags yamllint
 
 # install latest stable node
 npm cache clean -f
 npm install -g n
 node_version=`node --version`
-ln -s "/workspaces/github/vendor/node/node-$node_version-linux-x64/lib/node_modules/n/bin/n" /usr/local/bin/n
-n stable
+sudo ln -s "/workspaces/github/vendor/node/node-$node_version-linux-x64/lib/node_modules/n/bin/n" /usr/local/bin/n
+sudo n stable
 
 # install fzf
 rm -rf $HOME/.fzf
