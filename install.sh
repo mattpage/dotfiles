@@ -5,7 +5,7 @@ exec 2>&1
 set -x
 
 # switch shells
-chsh -s $(which zsh)
+sudo chsh -s "$(which zsh)" "$(whoami)"
 
 mkdir -p $(pwd)/vim/backup $(pwd)/vim/bundle $(pwd)/vim/colors $(pwd)/vim-sessions
 
