@@ -1,15 +1,37 @@
-execute pathogen#infect()
-
 " This option stops vim from behaving in a strongly vi -compatible way.
 set nocompatible
+
+call plug#begin('~/.vim/plugged')
+Plug 'preservim/nerdtree'
+Plug 'vim-scripts/bufexplorer'
+Plug 'rbgrouleff/bclose'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'jremmen/vim-ripgrep'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+PLug 'itchyny/lightline'
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'bkad/CamelCaseMotion'
+Plug 'Yggdroot/indentLine'
+Plug 'ojroques/vim-oscyank'
+Plug 'tomasiser/vim-code-dark'
+Plug 'w0rp/ale'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-rhubarb'
+call plug#end()
 
 " turn on syntax highlighting
 syntax enable
 
-" solarized colors - background=dark|light
-set background=dark
-let g:solarized_termcolors=256
-colorscheme solarized
+" set vim-code-dark color scheme
+set t_Co=256
+set t_ut=
+colorscheme codedark
 
 " change cursor based on mode
 if $TERM_PROGRAM =~ "iTerm"
@@ -148,20 +170,20 @@ nnoremap <esc><esc> :nohl<cr>
 
 " Map Ctrl+Y and Ctrl+E to move Quarter page up/down respectively
 " this overrides normal view scrolling behavior, but I never use that
-function! ScrollQuarter(move)
-  let height=winheight(0)
+" function! ScrollQuarter(move)
+"   let height=winheight(0)
 
-  if a:move == 'up'
-    let key="k"
-  else
-    let key="j"
-  endif
+"   if a:move == 'up'
+"     let key="k"
+"   else
+"     let key="j"
+"   endif
 
-  execute 'normal! ' . height/4 . key
-endfunction
+"   execute 'normal! ' . height/4 . key
+" endfunction
 
-nnoremap <C-Y> <up> :call ScrollQuarter('up')<CR>
-nnoremap <C-E> <down> :call ScrollQuarter('down')<CR>
+" nnoremap <C-Y> <up> :call ScrollQuarter('up')<CR>
+" nnoremap <C-E> <down> :call ScrollQuarter('down')<CR>
 
 " --- NERDTree ---
 map <Leader>n :NERDTreeToggle<CR>
@@ -172,13 +194,13 @@ map <Leader>bb :bprevious<cr>
 map <Leader>bc :Bclose<cr>
 
 " --- vim-test ---
-let test#strategy = "vimterminal"
+" let test#strategy = "vimterminal"
 
-map <Leader>tn :TestNearest<CR>
-map <Leader>tf :TestFile<CR>
-map <Leader>ts :TestSuite<CR>
-map <Leader>tl :TestLast<CR>
-map <Leader>tv :TestVisit<CR>
+" map <Leader>tn :TestNearest<CR>
+" map <Leader>tf :TestFile<CR>
+" map <Leader>ts :TestSuite<CR>
+" map <Leader>tl :TestLast<CR>
+" map <Leader>tv :TestVisit<CR>
 
 " --- ALE ---
 let g:ale_ruby_rubocop_executable = 'bin/rubocop'
