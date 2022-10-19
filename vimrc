@@ -15,7 +15,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'bkad/CamelCaseMotion'
 Plug 'Yggdroot/indentLine'
 Plug 'ojroques/vim-oscyank'
-Plug 'overcache/NeoSolarized'
+Plug 'lifepillar/vim-solarized8'
 Plug 'w0rp/ale'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'tpope/vim-rails'
@@ -30,8 +30,9 @@ syntax enable
 
 " setup theme
 set termguicolors
-colorscheme NeoSolarized
+colorscheme solarized8_high
 set background=dark
+autocmd vimenter * ++nested colorscheme solarized8_high
 
 " change cursor based on mode
 if $TERM_PROGRAM =~ "iTerm"
