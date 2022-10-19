@@ -34,6 +34,14 @@ ln -s $(pwd)/vimrc $HOME/.vimrc
 ln -s $(pwd)/vim $HOME/.vim
 ln -s $(pwd)/screenrc $HOME/.screenrc
 
+rm -f $HOME/.zshrc
+ln -s $(pwd)/zshrc $HOME/.zshrc
+# ln -s $(pwd)/bash_profile $HOME/.bash_profile
+
+rm -rf $HOME/.config
+mkdir $HOME/.config
+ln -s "$(pwd)/config/nvim" "$HOME/.config/nvim"
+
 mkdir -p $(pwd)/vim/backup $(pwd)/vim/colors $(pwd)/vim-sessions
 
 vim -Es -u $HOME/.vimrc -c "PlugInstall | qa"
