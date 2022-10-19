@@ -10,7 +10,7 @@ PACKAGES_NEEDED="\
     ripgrep \
     fuse \
     universal-ctags \
-    yamllint" 
+    yamllint"
 
 if ! dpkg -s ${PACKAGES_NEEDED} > /dev/null 2>&1; then
     if [ ! -d "/var/lib/apt/lists" ] || [ "$(ls /var/lib/apt/lists/ | wc -l)" = "0" ]; then
