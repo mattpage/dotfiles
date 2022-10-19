@@ -3,19 +3,19 @@ set nocompatible
 
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
-Plug 'vim-scripts/bufexplorer'
-Plug 'rbgrouleff/bclose'
+Plug 'jlanzarotta/bufexplorer'
+Plug 'rbgrouleff/bclose.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'itchyny/lightline'
+Plug 'itchyny/lightline.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'bkad/CamelCaseMotion'
 Plug 'Yggdroot/indentLine'
 Plug 'ojroques/vim-oscyank'
-Plug 'tomasiser/vim-code-dark'
+Plug 'overcache/NeoSolarized'
 Plug 'w0rp/ale'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'tpope/vim-rails'
@@ -28,10 +28,10 @@ call plug#end()
 " turn on syntax highlighting
 syntax enable
 
-" set vim-code-dark color scheme
-set t_Co=256
-set t_ut=
-colorscheme codedark
+" setup theme
+set termguicolors
+colorscheme NeoSolarized
+set background=dark
 
 " change cursor based on mode
 if $TERM_PROGRAM =~ "iTerm"
