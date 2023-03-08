@@ -254,6 +254,9 @@ let g:go_gopls_enabled = 1
 let g:go_def_mode='gopls'
 let g:go_info_mode='gopls'
 
+" Use a popup window for Shift+K and :GoDoc rather than preview window
+let g:go_doc_popup_window = 1
+
 " Highlight struct and interface names.
 let g:go_highlight_types = 1
 
@@ -338,8 +341,8 @@ command! FormatJSON PrettyPrintJSON
 command! FormatJson PrettyPrintJSON
 
 " " --- yank text in visual mode using the ANSI OSC52 sequence ---
-vnoremap <leader>y :OSCYank<CR>
-vnoremap yy :OSCYank<CR>
+vnoremap <leader>y :OSCYankVisual<CR>
+vnoremap yy :OSCYankVisual<CR>
 
 " --- copy file path of current buffer to clipboard ---
-nnoremap <leader>cp :let @" = expand("%")<cr>:OSCYankReg "<CR>
+nnoremap <leader>cp :let @" = expand("%")<cr>:OSCYankRegister "<CR>
