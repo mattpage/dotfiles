@@ -1,6 +1,3 @@
-" This option stops vim from behaving in a strongly vi -compatible way.
-set nocompatible
-
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
 Plug 'jlanzarotta/bufexplorer'
@@ -72,9 +69,9 @@ set ruler
 
 " --- Whitespace stuff ---
 set nowrap
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=8
+set shiftwidth=4
+set softtabstop=4
 set expandtab
 
 " backspace should delete over line breaks and such
@@ -134,7 +131,7 @@ set directory=~/.vim/backup
 match ErrorMsg '\s\+$'
 
 " Removes trailing spaces
-function! TrimWhiteSpace()
+function! TrimWhiteSpace() abort
     %s/\s\+$//e
 endfunction
 
@@ -142,24 +139,25 @@ endfunction
 nnoremap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
 nnoremap <Leader>rtw :call TrimWhiteSpace()<CR>
 
-" if has("autocmd")
-"   autocmd FileWritePre    * :call TrimWhiteSpace()
-"   autocmd FileAppendPre   * :call TrimWhiteSpace()
-"   autocmd FilterWritePre  * :call TrimWhiteSpace()
-"   autocmd BufWritePre     * :call TrimWhiteSpace()
-" endif
+augroup ReloadVimrcAfterEdit
+  autocmd! " remove all auto-commands from this group
 
-" When vimrc is edited, reload it
-autocmd! bufwritepost .vimrc source ~/.vimrc
+  " When vimrc is edited, reload it
+  autocmd bufwritepost .vimrc source ~/.vimrc
+augroup END
 
-" yaml requires 2 space indenting
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+augroup SetYamlIndent
+  autocmd! " remove all auto-commands from this group
+
+  " yaml requires 2 space indenting
+  autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+augroup END
 
 " Show (partial) command in the status line
 set showcmd
 
 " Super easy saves
-map <leader>s :w<CR>
+nnoremap <leader>s :w<CR>
 
 " Use jj to leave insert mode
 inoremap jj <Esc>
@@ -171,39 +169,13 @@ vnoremap v <esc>
 " unhilight on escape escape
 nnoremap <esc><esc> :nohl<cr>
 
-" Map Ctrl+Y and Ctrl+E to move Quarter page up/down respectively
-" this overrides normal view scrolling behavior, but I never use that
-" function! ScrollQuarter(move)
-"   let height=winheight(0)
-
-"   if a:move == 'up'
-"     let key="k"
-"   else
-"     let key="j"
-"   endif
-
-"   execute 'normal! ' . height/4 . key
-" endfunction
-
-" nnoremap <C-Y> <up> :call ScrollQuarter('up')<CR>
-" nnoremap <C-E> <down> :call ScrollQuarter('down')<CR>
-
 " --- NERDTree ---
-map <Leader>n :NERDTreeToggle<CR>
+nnoremap <Leader>n :NERDTreeToggle<CR>
 
 " --- Buffer switching ---
-map <Leader>bf :bnext<cr>
-map <Leader>bb :bprevious<cr>
-map <Leader>bc :Bclose<cr>
-
-" --- vim-test ---
-" let test#strategy = "vimterminal"
-
-" map <Leader>tn :TestNearest<CR>
-" map <Leader>tf :TestFile<CR>
-" map <Leader>ts :TestSuite<CR>
-" map <Leader>tl :TestLast<CR>
-" map <Leader>tv :TestVisit<CR>
+nnoremap <Leader>bf :bnext<cr>
+nnoremap <Leader>bb :bprevious<cr>
+nnoremap <Leader>bc :Bclose<cr>
 
 " --- ALE ---
 let g:ale_ruby_rubocop_executable = 'bin/rubocop'
@@ -232,13 +204,13 @@ let g:ale_completion_enabled = 0
 set rtp+=~/.fzf
 
 " map leader+ff to fuzzy find files
-map <Leader>ff :Files<CR>
+nnoremap <Leader>ff :Files<CR>
 
 " map leader+fc to find commits
-map <Leader>fc :Commits<CR>
+nnoremap <Leader>fc :Commits<CR>
 
 "--- vim-commentary ---
-map <leader>c gc<CR>
+nnoremap <leader>c gc<CR>
 
 "--- vim-javascript ---
 " do not syntax highlight jsdocs
@@ -297,10 +269,7 @@ let g:go_highlight_diagnostic_errors = 1
 let g:go_highlight_diagnostic_warnings = 1
 
 " --- vim-gutentags ---
-if filereadable('/usr/local/Cellar/universal-ctags/HEAD-5d000b1/bin')
-  " homebrew universal-ctags
-  let g:gutentags_ctags_executable = '/usr/local/Cellar/universal-ctags/HEAD-5d000b1/bin/ctags'
-elseif filereadable('/usr/local/bin/ctags')
+if filereadable('/usr/local/bin/ctags')
   " homebrew
   let g:gutentags_ctags_executable = '/usr/local/bin/ctags'
 else
