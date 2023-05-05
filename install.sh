@@ -9,6 +9,7 @@ PACKAGES_NEEDED="\
     fzf \
     ripgrep \
     fuse \
+    tmux \
     universal-ctags \
     yamllint"
 
@@ -42,8 +43,14 @@ rm -rf $HOME/.config
 mkdir $HOME/.config
 ln -s "$(pwd)/config/nvim" "$HOME/.config/nvim"
 
-mkdir -p $(pwd)/vim/backup $(pwd)/vim/colors $(pwd)/vim-sessions
+mkdir -p $(pwd)/vim/backup $(pwd)/vim/colors
+
+mkdir $HOME/vim-sessions
+
+git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 
 vim -Es -u $HOME/.vimrc -c "PlugInstall | qa"
 
 sudo chsh -s "$(which zsh)" "$(whoami)"
+
+tmux source $HOME/.tmux.conf
