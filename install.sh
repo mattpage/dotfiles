@@ -9,7 +9,6 @@ PACKAGES_NEEDED="\
     fzf \
     ripgrep \
     fuse \
-    tmux \
     universal-ctags \
     yamllint"
 
@@ -30,14 +29,15 @@ curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 sudo chmod u+x nvim.appimage
 sudo mv nvim.appimage /usr/local/bin/nvim
 
-ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
 ln -s $(pwd)/vimrc $HOME/.vimrc
 ln -s $(pwd)/vim $HOME/.vim
 ln -s $(pwd)/screenrc $HOME/.screenrc
 
-rm -f $HOME/.zshrc
-ln -s $(pwd)/zshrc $HOME/.zshrc
-# ln -s $(pwd)/bash_profile $HOME/.bash_profile
+# rm -f $HOME/.zshrc
+# ln -s $(pwd)/zshrc $HOME/.zshrc
+
+# append my zshrc to home .zshrc
+echo "source '/workspaces/.codespaces/.persistedshare/dotfiles/zshrc'" >> ~/.zshrc
 
 rm -rf $HOME/.config
 mkdir $HOME/.config
@@ -47,10 +47,12 @@ mkdir -p $(pwd)/vim/backup $(pwd)/vim/colors
 
 mkdir $HOME/vim-sessions
 
-git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
-
 vim -Es -u $HOME/.vimrc -c "PlugInstall | qa"
 
 sudo chsh -s "$(which zsh)" "$(whoami)"
 
-tmux source $HOME/.tmux.conf
+# some git settings
+git config --global init.defaultBranch main
+git config --global push.default simple
+git config --global push.autoSetupRemote true
+git config --global commit.gpgsign false
