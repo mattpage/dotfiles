@@ -33,11 +33,8 @@ ln -s $(pwd)/vimrc $HOME/.vimrc
 ln -s $(pwd)/vim $HOME/.vim
 ln -s $(pwd)/screenrc $HOME/.screenrc
 
-# rm -f $HOME/.zshrc
-# ln -s $(pwd)/zshrc $HOME/.zshrc
-
-# append my zshrc to home .zshrc
-echo "source '/workspaces/.codespaces/.persistedshare/dotfiles/zshrc'" >> ~/.zshrc
+rm -f $HOME/.zshrc
+ln -s $(pwd)/zshrc $HOME/.zshrc
 
 rm -rf $HOME/.config
 mkdir $HOME/.config
