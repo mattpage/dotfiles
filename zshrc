@@ -12,10 +12,3 @@ fpath=(~/.zsh $fpath)
 
 autoload -Uz compinit && compinit
 
-# See https://github.com/github/codespaces/issues/2851
-export HISTFILE=/workspaces/.codespaces/.persistedshare/.zsh_history
-# Write history each command due to Codespace sometimes not flushing
-export PROMPT_COMMAND="history -a"
-export HISTSIZE=-1
-export HISTFILESIZE=-1
-export HISTCONTROL=ignoreboth
