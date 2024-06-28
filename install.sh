@@ -30,13 +30,13 @@ curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 sudo chmod u+x nvim.appimage
 sudo mv nvim.appimage /usr/local/bin/nvim
 
-ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
+# ln -s $(pwd)/tmux.conf $HOME/.tmux.conf
 ln -s $(pwd)/vimrc $HOME/.vimrc
 ln -s $(pwd)/vim $HOME/.vim
 ln -s $(pwd)/screenrc $HOME/.screenrc
 
-rm -f $HOME/.zshrc
-ln -s $(pwd)/zshrc $HOME/.zshrc
+# rm -f $HOME/.zshrc
+# ln -s $(pwd)/zshrc $HOME/.zshrc
 # ln -s $(pwd)/bash_profile $HOME/.bash_profile
 
 rm -rf $HOME/.config
@@ -47,10 +47,19 @@ mkdir -p $(pwd)/vim/backup $(pwd)/vim/colors
 
 mkdir $HOME/vim-sessions
 
-git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
+# git clone https://github.com/tmux-plugins/tpm $HOME/.tmux/plugins/tpm
 
 vim -Es -u $HOME/.vimrc -c "PlugInstall | qa"
 
+#tmux source $HOME/.tmux.conf
+
+git config --global init.defaultBranch main
+git config --global push.default simple
+git config --global push.autoSetupRemote true
+git config --global commit.gpgsign false
+
 sudo chsh -s "$(which zsh)" "$(whoami)"
 
-tmux source $HOME/.tmux.conf
+# Leave what's in place there but append customizations
+echo "source '/workspaces/.codespaces/.persistedshare/dotfiles/zshrc'" >> ~/.zshrc
+
