@@ -4,7 +4,6 @@ exec > >(tee -i $HOME/dotfiles_install.log)
 exec 2>&1
 set -x
 
-# Install curl, tar, git, other dependencies if missing
 PACKAGES_NEEDED="\
     fzf \
     ripgrep \
