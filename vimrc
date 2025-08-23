@@ -1,12 +1,12 @@
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
+Plug 'preservim/tagbar'
 Plug 'jlanzarotta/bufexplorer'
 Plug 'rbgrouleff/bclose.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'jremmen/vim-ripgrep'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'itchyny/lightline.vim'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'bkad/CamelCaseMotion'
@@ -258,16 +258,21 @@ nnoremap <Leader>ff :Files<CR>
 " map leader+fc to find commits
 nnoremap <Leader>fc :Commits<CR>
 
+" map leader+fb to fuzzy find buffers
+nnoremap <Leader>fb :Buffers<CR>
+
+" map leader+fl to fuzzy find lines
+nnoremap <Leader>fl :Lines<CR>
+
+" map leader+ft to fuzzy find tags
+nnoremap <Leader>ft :Tags<CR>
+
 "--- vim-commentary ---
 nmap <leader>c gc<CR>
 
 "--- vim-javascript ---
 " do not syntax highlight jsdocs
 let g:javascript_plugin_jsdoc = 0
-
-" --- vim-jsx ---
-" jsx extension is not required for syntax highlighting and indenting
-let g:jsx_ext_required = 0
 
 " --- vim-go ---
 " use the gopls language server
@@ -323,6 +328,9 @@ let g:go_highlight_diagnostic_warnings = 1
 " --- vim-gutentags ---
 let g:gutentags_ctags_executable = 'ctags'
 set statusline+=%{gutentags#statusline()}
+
+" --- tagbar ---
+noremap <leader>tt :TagbarToggle<CR>
 
 " --- indentline ---
 let g:indentLine_char = '⦙'
