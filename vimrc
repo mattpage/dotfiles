@@ -108,29 +108,94 @@ set number
 set ruler
 
 " --- Clipboard stuff ---
-set clipboard^=unnamed,unnamedplus
-
-" Safe defaults
-" Normal deletions/changes go to black hole, not clipboard
-nnoremap d "_d
-nnoremap D "_D
-nnoremap c "_c
-nnoremap C "_C
-
-" Small deletions go to local numbered register ("1")
-nnoremap x "1x
-nnoremap s "1s
-
-" Safe pasting in visual mode
-" 'p' in visual mode won't clobber the clipboard.
-vnoremap p "_c<C-r><C-o>+
+set clipboard=
 
 " Explicit clipboard operations
-" Use <leader>y/d/p when you *want* to affect the clipboard
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
-nnoremap <leader>d "+d
-nnoremap <leader>p "+p
+" Use <leader>y/d/p to interact with the clipboard
+
+" --- Clipboard setup ---
+
+if exists('$SSH_CONNECTION') || exists('$SSH_CLIENT') || exists('$SSH_TTY')
+  " remote (SSH) clipboard setup using vim-oscyank and OSC52
+
+  " Copy visually selected text to *local* clipboard using OSC52
+  vnoremap <leader>y :OSCYankVisual<CR>
+
+  " Copy text (via a motion, e.g. `<leader>yw`, `<leader>yi"`) to *local* clipboard
+  " This captures motion-based yanks through OSC52
+  nnoremap <leader>y :set opfunc=OSCYankOperator<CR>g@
+
+  " Copy current line to *local* clipboard using OSC52
+  nnoremap <leader>yy :OSCYankVisual<CR>
+
+  " Yank All - copy the entire buffer to clipboard / OSC52
+  nnoremap <leader>ya ggVG:OSCYankVisual<CR>
+
+  " Delete text silently (don’t overwrite any registers)
+  " This prevents broken clipboard behavior on remote machines
+  nnoremap <leader>d "_d
+
+  " Paste from unnamed register (the last yanked/deleted text)
+  " Works consistently even when no system clipboard is available
+  nnoremap <leader>p :normal! p<CR>
+
+  " Paste before cursor from unnamed register
+  nnoremap <leader>P :normal! P<CR>
+
+  " Copy the current file’s relative path to the *local* clipboard using OSC52
+  nnoremap <leader>cp :let @" = expand("%")<cr>:OSCYankRegister "<CR>
+
+  " Copy the current file’s absolute path to the *local* clipboard using OSC52
+  nnoremap <leader>cP :let @" = expand("%:p")<cr>:OSCYankRegister "<CR>
+else
+  " local clipboard setup
+
+  " Copy visually selected text to system clipboard
+  vnoremap <leader>y "+y
+
+  " Copy text (via a motion, e.g. `<leader>yw`, `<leader>yi"`) to system clipboard
+  nnoremap <leader>y "+y
+
+  " Copy current line to system clipboard
+  nnoremap <leader>yy "+yy
+
+  " Yank All - copy the entire buffer to clipboard
+  nnoremap <leader>ya ggVG"+y
+
+  " Delete text and send it to the system clipboard (cut)
+  nnoremap <leader>d "+d
+
+  " Paste from system clipboard
+  nnoremap <leader>p "+p
+
+  " Paste before Cursor from clipboard
+  nnoremap <leader>P "+P
+
+  " Copy current file’s relative path to system clipboard
+  nnoremap <leader>cp :let @+ = expand("%")<CR>
+
+  " Copy current file’s absolute path to system clipboard
+  nnoremap <leader>cP :let @+ = expand("%:p")<CR>
+endif
+
+" mimic easy-clip
+"set clipboard^=unnamed,unnamedplus
+"
+"" Safe defaults
+"" Normal deletions/changes go to black hole, not clipboard
+"nnoremap d "_d
+"nnoremap D "_D
+"nnoremap c "_c
+"nnoremap C "_C
+"
+"" Small deletions go to local numbered register ("1")
+"nnoremap x "1x
+"nnoremap s "1s
+"
+"" Safe pasting in visual mode
+"" 'p' in visual mode won't clobber the clipboard.
+"vnoremap p "_c<C-r><C-o>+
+
 
 " --- Whitespace stuff ---
 set nowrap
@@ -336,6 +401,50 @@ nnoremap <Leader>fl :Lines<CR>
 " map leader+ft to fuzzy find tags
 nnoremap <Leader>ft :Tags<CR>
 
+"--- FZF devdocs support ---
+
+" open devdocs in browser
+function! s:OpenDevDocsUrl(lines)
+  if empty(a:lines)
+    return
+  endif
+  let url = split(a:lines[0], '\t')[-1]
+  if executable('open')
+    call system('open ' . shellescape(url) . ' &')
+  elseif executable('xdg-open')
+    call system('xdg-open ' . shellescape(url) . ' &')
+  else
+    echo 'Open this manually: ' . url
+  endif
+endfunction
+
+" Base directory for DevDocs data
+let g:devdocs_data_dir = expand('~/.local/share/devdocs')
+
+function! DevDocsFzf()
+  let index = g:devdocs_data_dir . '/devdocs_index.txt'
+  if !filereadable(index)
+    echoerr "DevDocs index not found. Run :DevDocsUpdate first."
+    return
+  endif
+
+  " Handler function
+  let l:Handler = function('s:OpenDevDocsUrl')
+
+  call fzf#run(fzf#wrap({
+        \ 'source': 'cat ' . shellescape(index),
+        \ 'sink*': l:Handler,
+        \ 'options': ['--delimiter', '\t', '--with-nth=1', '--prompt', 'DevDocs> '],
+        \ }))
+endfunction
+
+" Fuzzy search mapping
+nnoremap <leader>fd :call DevDocsFzf()<CR>
+
+" Update command (run local update script)
+command! DevDocsUpdate execute '!bash ' . shellescape(g:devdocs_data_dir . '/update-devdocs.sh')
+
+
 "--- vim-commentary ---
 nmap <leader>c gc<CR>
 
@@ -479,13 +588,6 @@ endfunction
 
 " Map to <leader>fr for convenience
 nnoremap <leader>fr :call RgFindReplaceAll()<CR>
-
-" " --- yank text in visual mode using the ANSI OSC52 sequence ---
-vnoremap <leader>y :OSCYankVisual<CR>
-vnoremap yy :OSCYankVisual<CR>
-
-" --- copy file path of current buffer to clipboard ---
-nnoremap <leader>cp :let @" = expand("%")<cr>:OSCYankRegister "<CR>
 
 if has('nvim')
 " --- Lua configuration for nvim-treesitter ---
