@@ -24,6 +24,8 @@ sudo modprobe fuse
 sudo groupadd fuse
 sudo usermod -a -G fuse "$(whoami)"
 
+curl -fsSL https://raw.githubusercontent.com/mattpage/vimfiles/main/.vimrc -o $(pwd)/vimrc
+
 ln -s $(pwd)/vimrc $HOME/.vimrc
 ln -s $(pwd)/vim $HOME/.vim
 ln -s $(pwd)/screenrc $HOME/.screenrc
